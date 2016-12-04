@@ -5,21 +5,22 @@ import './index.css';
 
 var Tweet = React.createClass({
   render: function() {
+    var {tweet} = this.props;
     return (
       <div className="tweet">
         <Avatar
-          hash={this.props.tweet.gravatar}/>
+          hash={tweet.gravatar}/>
         <div className="content">
           <NameWithHandle 
-            author={this.props.tweet.author} />
+            author={tweet.author} />
           <Time 
-            time={this.props.tweet.timestamp} />
+            time={tweet.timestamp} />
           <Message 
-            text={this.props.tweet.message}/>
+            text={tweet.message}/>
           <div className="buttons">
             <ReplyButton />
-            <RetweetButton />
-            <LikeButton />
+            <RetweetButton count={tweet.retweets} />
+            <LikeButton count={tweet.likes} />
             <MoreOptionsButton />
           </div>
         </div>
@@ -36,7 +37,7 @@ var testTweet = {
     name: "IAMA Cat Person"
   },
   likes: 2,
-  retweets: 0,
+  retweets: 1,
   timestamp: "2016-07-30 21:24:37"
 };
 
@@ -81,10 +82,14 @@ var NameWithHandle = React.createClass({
 });
 
 var Time = React.createClass({
+  computeTimeString: function() {
+    return moment(this.props.time)
+    .fromNow();
+  },
   render: function() {
     return(
       <span className="time">
-        {this.props.time}
+        {this.computeTimeString()}
       </span>
     );
   }
@@ -99,17 +104,41 @@ var ReplyButton = React.createClass({
 });
 
 var RetweetButton = React.createClass({
+  getCount: function() {
+    if(this.props.count > 0) {
+      return (
+        <span
+          className="retweet-count">
+            {this.props.count}
+        </span>
+      );
+    } else {
+      return null;
+    }
+  },
   render: function() {
     return(
-      <i className="fa fa-retweet retweet-button" />
+      <span
+        className="retweet-button">
+          <i className="fa fa-retweet" />
+          {this.getCount()}
+      </span>
     );
   }
 });
 
 var LikeButton = React.createClass({
   render: function() {
+    var {count} = this.props;
     return(
-      <i className="fa fa-heart like-button" />
+      <span className="like-button">
+        <i className="fa fa-heart" />
+        {count > 0 ? 
+        <span className="like-count">
+          {count}
+        </span>
+        : null}
+      </span>
     );
   }
 });
