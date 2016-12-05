@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "eslint": "^3.11.1",
     "react-scripts": "0.7.0"
   },
   "dependencies": {
