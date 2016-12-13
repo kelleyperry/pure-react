@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-//https://api.cosmicjs.com/v1/kelley-react-test/object/social?pretty=true&read_key=WbK2aHDGGqgk70eSUwcCMsdikQMqL3stpWWkeMXZukOUohbReU
-
 class App extends React.Component {
 
    constructor(props) {
@@ -29,7 +27,10 @@ class App extends React.Component {
 
   render() {
     return(
-      <div>{this.state.metafields}</div>
+     <ul>
+     {this.state.metafields.map(function(metafield){
+       return <li>{metafield.key}{metafield.title}{metafield.value}</li>
+     })}</ul>
     );
   }
 }
