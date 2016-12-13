@@ -1,3 +1,11 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+       // Controls the font family.
+    "editor.fontFamily": "'Courier New', Menlo, Monaco, monospace",
+
+    // Controls the font weight.
+    "editor.fontWeight": "normal",
+
+    // Controls the font size in pixels.
+    "editor.fontSize": 16,
 }
