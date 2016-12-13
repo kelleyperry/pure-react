@@ -27,10 +27,12 @@ class App extends React.Component {
 
   render() {
     return(
-     <ul>
-     {this.state.metafields.map(function(metafield){
-       return <li>{metafield.key}{metafield.title}{metafield.value}</li>
-     })}</ul>
+      <ul>{this.state.metafields.map(function(metafield, i) {
+        return (
+          <li key={i}>{metafield.title}</li>
+        )
+      })}
+      </ul>
     );
   }
 }
