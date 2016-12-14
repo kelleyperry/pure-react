@@ -8,32 +8,39 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      metafields: []
+      nav: [],
+      home: []
     };
   }
 
   componentDidMount() {
-    var myRequest = new Request('https://api.cosmicjs.com/v1/kelley-react-test/object/social?pretty=true&read_key=WbK2aHDGGqgk70eSUwcCMsdikQMqL3stpWWkeMXZukOUohbReU');
-    
+    var myRequest = new Request('https://api.cosmicjs.com/v1/kelley-react-test/objects?read_key=WbK2aHDGGqgk70eSUwcCMsdikQMqL3stpWWkeMXZukOUohbReU');
     fetch(myRequest).then((response) => {
       return(response).json().then((json) => {
-        console.log(json.object.metafields);
-        var metafields = json.object.metafields;
-        console.log(metafields);
-        this.setState({ metafields });
+        var nav = json.objects[0].metafields;
+        var home = json.objects[5];
+        console.log(nav);
+        console.log(home);
+        this.setState({ nav, home });
       })
     })
 }
 
   render() {
     return(
-      <ul>{this.state.metafields.map(function(metafield, i) {
-        return (
-          <li key={i}>{metafield.title}{metafield.value}</li>
-        )
-      })}
-      </ul>
-    );
+      <div>
+        <ul>
+        {this.state.nav.map(function(metafield, i) {
+          return (
+            <li key={i} className={metafield.key}><a href={metafield.value}>{metafield.title}</a></li>
+            )
+          })}
+        </ul>
+        <ul>
+          <li dangerouslySetInnerHTML={{__html:this.state.home.content}}></li>
+        </ul>
+      </div>
+    )
   }
 }
 
